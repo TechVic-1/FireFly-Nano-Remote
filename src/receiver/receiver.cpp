@@ -15,6 +15,8 @@
     #include <ESPmDNS.h>
     #include <WiFiUdp.h>
     #include <ArduinoOTA.h>
+    #include "wifi_credentials.h"
+    
 
     // Uart serial
     HardwareSerial MySerial(1);
@@ -174,8 +176,8 @@ float batteryPackPercentage( float voltage ) { // Calculate the battery level of
         state = UPDATE;
 
         // replace this with your WiFi network credentials
-        const char* ssid = "sk8"; // e.g. "FBI Surveillance Van #34";
-        const char* password = "12345678"; // e.g. "12345678";
+        const char* ssid = WIFI_SSID; // e.g. "FBI Surveillance Van #34";
+        const char* password = WIFI_PASSWORD; // e.g. "12345678";
 
         wifiStatus = "Connecting:";
         updateStatus = String(ssid);
