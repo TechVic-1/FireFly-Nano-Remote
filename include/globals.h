@@ -12,7 +12,7 @@
 //#include <analogWrite.h>
 #define ROADLIGHT_CONNECTED                 // FRONT LIGHT and BACKLIGHT option. Reconfigure 2 pins on the receiver side for FRONTLIGHT and BACKLIGHT PWM signal
 #define OUTPUT_PPM_THROTTLE               // include receiver functions to be able to output a THROTTLE PPM/PWM signal on PIN_PPM_THROTTLE (Menu:Receiver->AppMode)
-//#define EXPERIMENTAL                      // Implements experimental functionalities that might contain some bugs
+#define EXPERIMENTAL                      // Implements experimental functionalities that might contain some bugs
 
 // ********** * * * * * * * * * ***********************************************
 static bool inverse_speed_direction = false;   //change if speed is negative when going forwards
@@ -55,7 +55,7 @@ typedef enum {
   to produce a spike in the current and stop the board.
 */
 static bool  AUTO_CRUISE_ON = false;     // disabled by default
-static float PUSHING_SPEED = 12.0;       // km/h
+static float PUSHING_SPEED = 5.0;       // km/h
 static float PUSHING_TIME = 3.0;         // seconds
 static float CRUISE_CURRENT_SPIKE = 5.0; // Amps
 
@@ -83,19 +83,19 @@ static int REMOTE_SLEEP_TIMEOUT = 180; // seconds to go to sleep mode
 // turn off display if battery < 15%
 static int DISPLAY_BATTERY_MIN = 15;// #### change to 0 if remote screen doesnt turn ON, then calibrate battery voltage reading ####
 // VESC current, for graphs only
-static int MOTOR_MIN = -30;
-static int MOTOR_MAX = 30;
-static int BATTERY_MIN = -30;
-static int BATTERY_MAX = 30;
+static int MOTOR_MIN = -50;
+static int MOTOR_MAX = 50;
+static int BATTERY_MIN = -35;
+static int BATTERY_MAX = 35;
 // default board configuration
-static int MAX_SPEED = 30;       // KM/H
-static int MAX_RANGE = 30;       // KM
-static int BATTERY_CELLS = 10;
-static int BATTERY_TYPE = 0;     // 0: LI-ION | 1: LIPO
-static int MOTOR_POLES = 28;
-static int WHEEL_DIAMETER = 105;
-static int WHEEL_PULLEY = 1;
-static int MOTOR_PULLEY = 1;
+static int MAX_SPEED = 35;       // KM/H
+static int MAX_RANGE = 35;       // KM
+static int BATTERY_CELLS = 6;
+static int BATTERY_TYPE = 1;     // 0: LI-ION | 1: LIPO
+static int MOTOR_POLES = 14;
+static int WHEEL_DIAMETER = 100;
+static int WHEEL_PULLEY = 44;
+static int MOTOR_PULLEY = 11;
 //LED roadlights
 static int LED_BRIGHTNESS_FRONT = 90;
 static int LED_BRIGHTNESS_BACK = 90;
