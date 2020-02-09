@@ -25,6 +25,7 @@
 #endif
 
 //PID pid = new PID(0.1, 100, -100, 0.25, 0, 127);
+//pidThrottle = new PID(PID_dt, PID_max, PID_min, PID_Kp, PID_Kd, PID_Ki);
 PID* pidThrottle;
     // Kp -  proportional gain
     // Ki -  Integral gain
@@ -33,7 +34,7 @@ PID* pidThrottle;
     // max - maximum value of manipulated variable
     // min - minimum value of manipulated variable
     double PID_Kp = 0.2;    //0.2 is a good starting value
-    double PID_Ki = 0;      //0 is fine, otherwise order of scale is 5E-7;
+    double PID_Ki = 0.0000001;      //0 is fine, otherwise order of scale is 5E-7;
     double PID_Kd = 0.4;    //0.4;
     double PID_dt = 25;     //25ms
     double PID_max = 1;
@@ -217,13 +218,13 @@ int smoothValueOverTime(int valueToAdd);
 #ifdef ROADLIGHT_CONNECTED
     RoadLightState myRoadLightState = OFF; //default value on startupTime
 
-    const double led_pwm_frequency = 200;
+    const double led_pwm_frequency = 5;
     const uint8_t led_pwm_channel_frontLight = 0; //GPIO channel to use
     const uint8_t led_pwm_channel_backLight = 1; //GPIO channel to use
     const uint8_t led_pwm_resolution = 8;
 
     unsigned long lastBrakeLightPulse = 0;
-    unsigned long brakeLightPulseInterval = 100; //ms between each brakeLightPulse initiation
+    unsigned long brakeLightPulseInterval = 200; //ms between each brakeLightPulse initiation
     unsigned long brakeLightPulseDuration = 50; //ms TBD
 
     void switchLightOn();

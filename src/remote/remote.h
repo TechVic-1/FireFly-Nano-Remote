@@ -32,8 +32,8 @@
     const int CENTER_HALL = 752;
     const int MAX_HALL = 1023;
     // **************************************** LED ROADLIGHTS *****************************
-    int FRONTLIGHT_BRIGHTNESS = 100;  //TEMP : testing Rx settings update from Tx
-    int BACKLIGHT_BRIGHTNESS = 100;  //TEMP : testing Rx settings update from Tx
+    int SIDELIGHT_COLOR = 255;  //TEMP : testing Rx settings update from Tx
+    int LIGHT_BRIGHTNESS = 100;  //TEMP : testing Rx settings update from Tx
     int BRAKELIGHT_BRIGHTNESS = 255;  //TEMP : testing Rx settings update from Tx
 
     RoadLightState myRoadLightState = OFF;  //current roadlight mode activated (OFF : default at startup)
@@ -43,10 +43,10 @@
     //bool requestAdjustLightBrightness = false; //flag for putting a SET_LIGHT_BRIGHTNESS request in the next remotePacket
 
     enum RoadlightSetting_page_stage{
-        ADJUSTING_FRONTLIGHT_BRIGHTNESS,
-        ADJUSTING_BACKLIGHT_BRIGHTNESS,
+        ADJUSTING_SIDELIGHT_COLOR,
+        ADJUSTING_LIGHT_BRIGHTNESS,
         ADJUSTING_BRAKELIGHT_BRIGHTNESS,
-    } myRoadlightSetting_page_stage = ADJUSTING_FRONTLIGHT_BRIGHTNESS; //default mode at startup
+    } myRoadlightSetting_page_stage = ADJUSTING_SIDELIGHT_COLOR; //default mode at startup
     // **************************************** LED ROADLIGHTS *****************************
 
     //***********  VERSION 3 : OPT_PARAM Tx <-> Rx  ***********
@@ -408,8 +408,8 @@ int myParamSelectorIndexArray1[] ={
     IDX_WHEEL_DIAMETER,
     IDX_WHEEL_PULLEY,
     IDX_MOTOR_PULLEY,
-    IDX_LED_BRIGHTNESS_FRONT,
-    IDX_LED_BRIGHTNESS_BACK,
+    IDX_LED_SIDE_COLOR,
+    IDX_LED_BRIGHTNESS,
     IDX_LED_BRIGHTNESS_BRAKE,
     IDX_LED_BRIGHTNESS_OFF,
     IDX_LED_ROADLIGHT_MODE,

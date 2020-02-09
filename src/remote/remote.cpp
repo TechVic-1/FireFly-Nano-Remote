@@ -1555,8 +1555,8 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                                 backToMainMenu();
                             case ROADLIGHT_SETTINGS:
                                 //download 3 current values from receiver:
-                               loadOptParamFromReceiver(IDX_LED_BRIGHTNESS_FRONT);
-                               loadOptParamFromReceiver(IDX_LED_BRIGHTNESS_BACK);
+                               loadOptParamFromReceiver(IDX_LED_SIDE_COLOR);
+                               loadOptParamFromReceiver(IDX_LED_BRIGHTNESS);
                                loadOptParamFromReceiver(IDX_LED_BRIGHTNESS_BRAKE);
                             break;
                         }
@@ -2011,8 +2011,8 @@ void drawBars_2(int x, int y, int bars, String caption, String s, bool isHighlig
     //drawHLine(x, y+33, width);
     // values
     display.setRotation(DISPLAY_ROTATION_90);
-    if (isHighlighted==true){drawString((" - " + s + " - "), 25, x + width -2, fontPico);    }
-    else{drawString(s, 40, x + width -2, fontDesc); }
+    if (isHighlighted==true){drawString((" - " + s + " - "), 5, x + width -2, fontPico);    }
+    else{drawString(s, 10, x + width -2, fontDesc); }
     display.setRotation(DISPLAY_ROTATION);
 
 }
@@ -2173,7 +2173,7 @@ void drawMainPage() {
     }
 
     // max distance
-    int range = 30;
+    int range = boardConfig.maxRange;
     if (value > range) {range = value;}
 
     drawString(String(range), 52, 118, fontPico);
@@ -2434,18 +2434,18 @@ void drawLightSettingsPage(){
     int deadBand = 15;
     uint8_t myOptIndex;
     int myLightSettingValue;
-    int myFrontLightBrightness = getOptParamValue(IDX_LED_BRIGHTNESS_FRONT);
-    int myBackLightBrightness = getOptParamValue(IDX_LED_BRIGHTNESS_BACK);
+    int mySideLightColor = getOptParamValue(IDX_LED_SIDE_COLOR);
+    int myLightBrightness = getOptParamValue(IDX_LED_BRIGHTNESS);
     int myBrakeLightBrightness = getOptParamValue(IDX_LED_BRIGHTNESS_BRAKE);
 
     switch (myRoadlightSetting_page_stage) {
-        case ADJUSTING_FRONTLIGHT_BRIGHTNESS:
-            myLightSettingValue = myFrontLightBrightness;
-            myOptIndex = IDX_LED_BRIGHTNESS_FRONT;
+        case ADJUSTING_SIDELIGHT_COLOR:
+            myLightSettingValue = mySideLightColor;
+            myOptIndex = IDX_LED_SIDE_COLOR;
         break;
-        case ADJUSTING_BACKLIGHT_BRIGHTNESS:
-            myLightSettingValue = myBackLightBrightness;
-            myOptIndex = IDX_LED_BRIGHTNESS_BACK;
+        case ADJUSTING_LIGHT_BRIGHTNESS:
+            myLightSettingValue = myLightBrightness;
+            myOptIndex = IDX_LED_BRIGHTNESS;
         break;
         case ADJUSTING_BRAKELIGHT_BRIGHTNESS:
             myLightSettingValue = myBrakeLightBrightness;
@@ -2473,11 +2473,11 @@ void drawLightSettingsPage(){
     //myLightSettingValue = nextPositionIndex;
 
     switch (myRoadlightSetting_page_stage) {
-        case ADJUSTING_FRONTLIGHT_BRIGHTNESS:
-            myFrontLightBrightness = myLightSettingValue;
+        case ADJUSTING_SIDELIGHT_COLOR:
+            mySideLightColor = myLightSettingValue;
         break;
-        case ADJUSTING_BACKLIGHT_BRIGHTNESS:
-            myBackLightBrightness = myLightSettingValue;
+        case ADJUSTING_LIGHT_BRIGHTNESS:
+            myLightBrightness = myLightSettingValue;
         break;
         case ADJUSTING_BRAKELIGHT_BRIGHTNESS:
             myBrakeLightBrightness = myLightSettingValue;
@@ -2492,12 +2492,12 @@ void drawLightSettingsPage(){
     int bars;
     //bool isHighlighted
     drawHLine(2, y, 64-2);
-        bars = map(myFrontLightBrightness, 0, 255, 0, 10);
-        drawBars_2(x, y, bars, String(bars), "Front", (myRoadlightSetting_page_stage==ADJUSTING_FRONTLIGHT_BRIGHTNESS));
+        bars = map(mySideLightColor, 0, 255, 0, 10);
+        drawBars_2(x, y, bars, String(bars), "Color", (myRoadlightSetting_page_stage==ADJUSTING_SIDELIGHT_COLOR));
 
         x += gap;
-        bars = map(myBackLightBrightness, 0, 255, 0, 10);
-        drawBars_2(x, y, bars, String(bars), "Back", (myRoadlightSetting_page_stage==ADJUSTING_BACKLIGHT_BRIGHTNESS));
+        bars = map(myLightBrightness, 0, 255, 0, 10);
+        drawBars_2(x, y, bars, String(bars), "Brightness", (myRoadlightSetting_page_stage==ADJUSTING_LIGHT_BRIGHTNESS));
 
         x += gap;
         bars = map(myBrakeLightBrightness, 0, 255, 0, 10);
@@ -2508,17 +2508,17 @@ void drawLightSettingsPage(){
         // apply calibration values
         //waitRelease(PIN_TRIGGER);
         switch (myRoadlightSetting_page_stage) {
-            case ADJUSTING_FRONTLIGHT_BRIGHTNESS:
-                FRONTLIGHT_BRIGHTNESS = myFrontLightBrightness;
-                myRoadlightSetting_page_stage = ADJUSTING_BACKLIGHT_BRIGHTNESS;
+            case ADJUSTING_SIDELIGHT_COLOR:
+                SIDELIGHT_COLOR = mySideLightColor;
+                myRoadlightSetting_page_stage = ADJUSTING_LIGHT_BRIGHTNESS;
             break;
-            case ADJUSTING_BACKLIGHT_BRIGHTNESS:
-                BACKLIGHT_BRIGHTNESS = myBackLightBrightness;
+            case ADJUSTING_LIGHT_BRIGHTNESS:
+                LIGHT_BRIGHTNESS = myLightBrightness;
                 myRoadlightSetting_page_stage = ADJUSTING_BRAKELIGHT_BRIGHTNESS;
             break;
             case ADJUSTING_BRAKELIGHT_BRIGHTNESS:
                 BRAKELIGHT_BRIGHTNESS = myBrakeLightBrightness;
-                myRoadlightSetting_page_stage = ADJUSTING_FRONTLIGHT_BRIGHTNESS;   // OR backToMainMenu();
+                myRoadlightSetting_page_stage = ADJUSTING_SIDELIGHT_COLOR;   // OR backToMainMenu();
             break;
 
             //backToMainMenu();

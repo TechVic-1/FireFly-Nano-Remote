@@ -16,7 +16,7 @@
 #define PIN_LED       25   // LED on board
 
 #define PIN_PWRBUTTON 12
-#define PIN_BACKLIGHT 12  //PWRBUTTON PIN is free on the RECEIVER side, we'll use it for PIN_BACKLIGHT
+#define Led_DATA_PIN 12 //PWRBUTTON PIN is free on the RECEIVER side, it's not a hardware SPI pin but SPI access will be bitbanged output
 
 #define PIN_PPM_THROTTLE 32 //PPM/PWM throttle output on RECEIVER side
 
@@ -30,8 +30,7 @@
 #define HAS_BUTTON (0) // button "PRG" on board
 
 #define PIN_VIBRO 17
-#define PIN_FRONTLIGHT 17 //VIBRO PIN is free on the RECEIVER side, we'll use it for PIN_FRONTLIGHT
-
+#define Led_CLOCK_PIN 17 //VIBRO PIN is free on the RECEIVER side, it's not a hardware SPI pin but SPI access will be bitbanged output
 
 
 #define HAS_DISPLAY  // OLED-Display on board

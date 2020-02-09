@@ -11,8 +11,8 @@
 //const uint32_t boardAddress = 0xA9BF713C;
 //#include <analogWrite.h>
 #define ROADLIGHT_CONNECTED                 // FRONT LIGHT and BACKLIGHT option. Reconfigure 2 pins on the receiver side for FRONTLIGHT and BACKLIGHT PWM signal
-#define OUTPUT_PPM_THROTTLE               // include receiver functions to be able to output a THROTTLE PPM/PWM signal on PIN_PPM_THROTTLE (Menu:Receiver->AppMode)
-#define EXPERIMENTAL                      // Implements experimental functionalities that might contain some bugs
+//#define OUTPUT_PPM_THROTTLE               // include receiver functions to be able to output a THROTTLE PPM/PWM signal on PIN_PPM_THROTTLE (Menu:Receiver->AppMode)
+//#define EXPERIMENTAL                      // Implements experimental functionalities that might contain some bugs
 
 // ********** * * * * * * * * * ***********************************************
 static bool inverse_speed_direction = false;   //change if speed is negative when going forwards
@@ -55,7 +55,7 @@ typedef enum {
   to produce a spike in the current and stop the board.
 */
 static bool  AUTO_CRUISE_ON = false;     // disabled by default
-static float PUSHING_SPEED = 5.0;       // km/h
+static float PUSHING_SPEED = 10.0;       // km/h
 static float PUSHING_TIME = 3.0;         // seconds
 static float CRUISE_CURRENT_SPIKE = 5.0; // Amps
 
@@ -64,10 +64,10 @@ static float AUTO_CRUISE_TIME = 30.0;    // seconds
 static float CRUISE_CURRENT_LOW = 5.0;   // Amps
 
 // auto stop if remote is off and speed is over 20 km/h
-static float MAX_PUSHING_SPEED = 20.0;   // km/h
+static float MAX_PUSHING_SPEED = 10.0;   // km/h
 
 // Auto stop (in seconds)
-static float AUTO_BRAKE_TIME = 5;    // time to apply the full brakes
+static float AUTO_BRAKE_TIME = 10;    // time to apply the full brakes
 static int AUTO_BRAKE_RELEASE = 3;     // time to release brakes after the full stop
 static float AUTO_BRAKE_ABORT_MAXSPEED = 3; // speed under which it's safe to abort auto brake procedure
 
@@ -85,11 +85,11 @@ static int DISPLAY_BATTERY_MIN = 15;// #### change to 0 if remote screen doesnt 
 // VESC current, for graphs only
 static int MOTOR_MIN = -50;
 static int MOTOR_MAX = 50;
-static int BATTERY_MIN = -35;
-static int BATTERY_MAX = 35;
+static int BATTERY_MIN = -10;
+static int BATTERY_MAX = 10;
 // default board configuration
-static int MAX_SPEED = 35;       // KM/H
-static int MAX_RANGE = 35;       // KM
+static int MAX_SPEED = 30;       // KM/H
+static int MAX_RANGE = 20;       // KM
 static int BATTERY_CELLS = 6;
 static int BATTERY_TYPE = 1;     // 0: LI-ION | 1: LIPO
 static int MOTOR_POLES = 14;
@@ -97,8 +97,8 @@ static int WHEEL_DIAMETER = 100;
 static int WHEEL_PULLEY = 44;
 static int MOTOR_PULLEY = 11;
 //LED roadlights
-static int LED_BRIGHTNESS_FRONT = 90;
-static int LED_BRIGHTNESS_BACK = 90;
+static int LED_SIDE_COLOR = 160; 
+static int LED_BRIGHTNESS = 20;
 static int LED_BRIGHTNESS_BRAKE = 255;
 static int LED_BRIGHTNESS_OFF = 0;
 static int LED_ROADLIGHT_MODE = 0;
@@ -193,8 +193,8 @@ enum GlobalSettingsIndex {
     IDX_WHEEL_DIAMETER,
     IDX_WHEEL_PULLEY,
     IDX_MOTOR_PULLEY,
-    IDX_LED_BRIGHTNESS_FRONT,
-    IDX_LED_BRIGHTNESS_BACK,
+    IDX_LED_SIDE_COLOR,
+    IDX_LED_BRIGHTNESS,
     IDX_LED_BRIGHTNESS_BRAKE,
     IDX_LED_BRIGHTNESS_OFF,
     IDX_LED_ROADLIGHT_MODE,
@@ -239,8 +239,8 @@ static String GlobalSettingsStringName[] = {
     "WHEEL_DIAMETER",
     "WHEEL_PULLEY",
     "MOTOR_PULLEY",
-    "LED_BRIGHTNESS_FRONT",
-    "LED_BRIGHTNESS_BACK",
+    "LED_SIDE_COLOR",
+    "LED_BRIGHTNESS",
     "LED_BRIGHTNESS_BRAKE",
     "LED_BRIGHTNESS_OFF",
     "LED_ROADLIGHT_MODE",
