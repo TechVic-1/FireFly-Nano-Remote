@@ -9,6 +9,8 @@ I have made a Wiki here on Github, with a few tips and guides on how to build th
 
 This fork of the FireFly Nano remote implements the following changes :
 
+- Bluetooth passthrough
+
 - LED lights management (FastLED lib): on the receiver side Led_DATA_PIN = 12 and Led_CLOCK_PIN = 17 (SPI bitbang output). The brightness settings and light mode can be changed from the remote's menu.
 
 - PPM signal : the receiver's PIN_PPM_THROTTLE pin is reserved for the output of a PPM/PWM standard signal of the throttle channel so the receiver can be connected to the VESC with the 3-pin cable and use the PPM apps instead of the VESC Remote(Nunchuck) standard App. The switch to PPM mode is available in the remote "Receiver -> APP Mode" menu. The 3.3v signal from the receiver has to be converted to 5V via a simple logic level converter. It's then possible to use the Firefly Nano with any of the VESC PPM mode apps, while still having the safety of the Auto-stop mode in case of a remote disconnection.
