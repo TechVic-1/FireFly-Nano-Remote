@@ -157,7 +157,7 @@ bool requestSpeedLimiter = false;
 bool speedLimiterState = 1; //OFF - ON
 
 bool requestUpdate = false; //when drawSettingsMenu() sets flag requestUpdate=TRUE : Next run of preparePacket() function catches requestUpdate=TRUE flag -> next packet sent to receiver is a SET_STATE = UPDATE request. Possible only under AppState=MENU
-
+bool requestBT = false;
 
 // menu
 enum menu_page {
@@ -168,7 +168,7 @@ enum menu_page {
 
 
 
-const byte subMenus = 7;
+const byte subMenus = 8;
 const byte mainMenus = 6;
 
 //String MENUS[mainMenus][subMenus] = {
@@ -179,8 +179,8 @@ String MENUS[mainMenus][subMenus] = {
     #endif
     },
     { "Remote", "Calibrate", "Pair", "Auto off"},
-    { "Board", "WIFIupdate",  "Battery", "Motor", "Wheel size", "Whl Pulley", "Mot Pulley"},
-    { "Lights", "Switch ON", "Switch OFF", "Brake Only", "Settings"},
+    { "Board", "WIFIupdate", "BT Com", "Battery", "Motor", "Wheel size", "Whl Pulley", "Mot Pulley"},
+    { "Lights", "Switch ON", "Switch OFF", "Side Thr", "Brake Only", "Settings"},
     { "Receiver", "App Mode", "SpeedLimit", "", "", "", ""},
     { "A-Cruise", "ON/OFF", "PushSpeed", "PushTime", "Curr.Spike", "CruiseTime", "CurrentLow" }
 };
@@ -188,8 +188,8 @@ String MENUS[mainMenus][subMenus] = {
 enum menu_main { MENU_INFO, MENU_REMOTE, MENU_BOARD, MENU_LIGHT, MENU_RECEIVER, MENU_AUTO_CRUISE };
 enum menu_info { INFO_DEBUG, INFO_2, INFO_3, INFO_4, INFO_5, INFO_SETTINGS };
 enum menu_remote { REMOTE_CALIBRATE, REMOTE_PAIR, REMOTE_SLEEP_TIMER };
-enum menu_board { BOARD_UPDATE, BOARD_MENU_BATTERY_CELLS, BOARD_MENU_MOTOR_POLES, BOARD_MENU_WHEEL_DIAMETER, BOARD_MENU_WHEEL_PULLEY, BOARD_MENU_MOTOR_PULLEY };
-enum menu_light { SWITCH_LIGHT_ON, SWITCH_LIGHT_OFF, SWITCH_LIGHT_BRAKES_ONLY, ROADLIGHT_SETTINGS }; // *** LED ROADLIGHTS ***
+enum menu_board { BOARD_UPDATE, BOARD_BT, BOARD_MENU_BATTERY_CELLS, BOARD_MENU_MOTOR_POLES, BOARD_MENU_WHEEL_DIAMETER, BOARD_MENU_WHEEL_PULLEY, BOARD_MENU_MOTOR_PULLEY };
+enum menu_light { SWITCH_LIGHT_ON, SWITCH_LIGHT_OFF, SWITCH_LIGHT_SIDE_THROTTLE, SWITCH_LIGHT_BRAKES_ONLY, ROADLIGHT_SETTINGS }; // *** LED ROADLIGHTS ***
 enum menu_receiver { SUBM_THROTTLE_MODE, SUBM_LIMITED_SPEED_MAX };
 enum menu_auto_cruise { CRUISE_MENU_AUTO_CRUISE, CRUISE_MENU_PUSHING_SPEED , CRUISE_MENU_PUSHING_TIME, CRUISE_MENU_CRUISE_CURRENT_SPIKE, CRUISE_MENU_AUTO_CRUISE_TIME, CRUISE_MENU_CRUISE_CURRENT_LOW };
 

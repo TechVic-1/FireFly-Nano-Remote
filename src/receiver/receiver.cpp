@@ -16,7 +16,6 @@
     #include <WiFiUdp.h>
     #include <ArduinoOTA.h>
     #include "wifi_credentials.h"
-    
 
     // Uart serial
     HardwareSerial MySerial(1);
@@ -44,6 +43,10 @@ bool statusLedState = false;
 unsigned long statusCycleTime, previousStatusMillis, currentMillis, startCycleMillis = 0;
 unsigned long lastDelay;
 
+// Bluetooth
+#ifdef BT_ENABLED
+
+#endif
 
 // ******** LED ROADLIGHTS ********
 #ifdef ROADLIGHT_CONNECTED  
@@ -69,7 +72,6 @@ void setup(){ //runs once after powerOn
     setDefaultEEPROMSettings();//Stores board config variables into boardConfig.packet and calls {not implemented}updateEEPROMSettings()
     calculateRatios();
     pinMode(PIN_LED, OUTPUT); //LED onBoard
-
 
     #ifdef ROADLIGHT_CONNECTED  // ******** LED ROADLIGHTS ********
 
@@ -210,6 +212,8 @@ float batteryPackPercentage( float voltage ) { // Calculate the battery level of
             return false;
         }
 
+
+
         // Port defaults to 3232
         // ArduinoOTA.setPort(3232);
 
@@ -253,6 +257,18 @@ float batteryPackPercentage( float voltage ) { // Calculate the battery level of
         wifiStatus = "IP: " + WiFi.localIP().toString();
         updateStatus = "Waiting...";
     }
+
+#ifdef BT_ENABLED
+    bool prepareBTCOM() {
+
+        if (isMoving()) return false;
+        state = BTCOM;
+
+            BTStatus = "Still NO code here";
+            BTCOMStatus = "Work in progress";
+    }
+#endif
+    
     int getStringWidth(String s) { //OLED text display function
         int16_t x1, y1;
         uint16_t w1, h1;
@@ -278,6 +294,7 @@ float batteryPackPercentage( float voltage ) { // Calculate the battery level of
             case PUSHING: return "Pushing";
             case ENDLESS: return "Cruise";
             case UPDATE: return "Update";
+            case BTCOM: return "BT com";
         }
     }
     void updateScreen() { //OLED refresh display function
@@ -305,6 +322,15 @@ float batteryPackPercentage( float voltage ) { // Calculate the battery level of
                 display.println(wifiStatus);
                 display.println(updateStatus);
             break;
+
+            case BTCOM:
+                display.setTextColor(WHITE);
+                display.setFont(fontDesc);
+                display.setCursor(0, 12);
+                display.println(BTStatus);
+                display.println(BTCOMStatus);
+            break;
+                
 
             default:
                 if (throttle == default_throttle && !isMoving()) {
@@ -625,6 +651,8 @@ void setState(AppState newState) { //called by the stateMachine()
             switch (state) {
                 case UPDATE: 
                     return;
+                case BTCOM:
+                    return;
                 case PUSHING: // monitor data
                 case STOPPING:
                 case ENDLESS:
@@ -644,6 +672,9 @@ void setState(AppState newState) { //called by the stateMachine()
         break;
 
         case UPDATE: 
+        break;
+
+        case BTCOM:
         break;
 
         case PAIRING:
@@ -686,6 +717,11 @@ void radioExchange() {   //receive packet, execute SET_ or GET_ request, send an
                             prepareUpdate();
                             #endif
                         break;
+                        case BTCOM:
+                            #ifdef BT_ENABLED
+                            prepareBTCOM();
+                            #endif
+                        break;
                         case PAIRING:
                             pairingRequest();
                             // request confirmed?
@@ -709,6 +745,9 @@ void radioExchange() {   //receive packet, execute SET_ or GET_ request, send an
                         break;
                         case RoadLightState::OFF: //0:
                             switchLightOff();
+                        break;
+                        case RoadLightState::SIDE_THROTTLE:
+                            switchLightSideThrottle();
                         break;
                         case RoadLightState::BRAKES_ONLY: //2:  //brake only mode
                             switchLightBrakesOnly();
@@ -1692,7 +1731,7 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
 #ifdef ROADLIGHT_CONNECTED
     void switchLightOn(){
 
-        for (int i = 0; i < 4; i++){
+        /*for (int i = 0; i < 4; i++){
             leds[frontLed[i]] = CHSV( 255, 0, LED_BRIGHTNESS); //White
             leds[backLed[i]] = CHSV( 255, 255, LED_BRIGHTNESS); //Red
         }
@@ -1702,13 +1741,12 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
             leds(18,31) = leds(14 - 1 ,0);
         }
         
-        FastLED.show();
+        FastLED.show();*/
         myRoadLightState = ON;
     }
 
     void switchLightOff(){
 
-        //FastLED.setBrightness(LED_BRIGHTNESS_OFF);
         for (int i = 0; i < 4; i++){
             leds[frontLed[i]] = CHSV( 255, 0, LED_BRIGHTNESS_OFF);
             leds[backLed[i]] = CHSV( 255, 255, LED_BRIGHTNESS_OFF);
@@ -1724,7 +1762,7 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
 
     void switchLightBrakesOnly(){
 
-        for (int i = 0; i < 4; i++){
+        /*for (int i = 0; i < 4; i++){
             leds[frontLed[i]] = CHSV( 255, 0, LED_BRIGHTNESS);
             leds[backLed[i]] = CHSV( 255, 255, LED_BRIGHTNESS);
         }
@@ -1733,8 +1771,12 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
             leds(18,31) = leds(14 - 1 ,0);
         }
         
-        FastLED.show();
+        FastLED.show();*/
         myRoadLightState = BRAKES_ONLY;
+    }
+
+    void switchLightSideThrottle(){
+        myRoadLightState = SIDE_THROTTLE;
     }
 
 
@@ -1746,8 +1788,10 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
 
             case ON:
                emitBrakeLightPulse(LED_BRIGHTNESS); //activate brakeLight flashes while ON (normal brightness) in between
-            
-            
+            break;
+
+            case SIDE_THROTTLE:
+                emitBrakeLightPulse(LED_BRIGHTNESS); //activate brakeLight flashes while ON (normal brightness) in between
             break;
 
             case BRAKES_ONLY:
@@ -1765,20 +1809,14 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
                 if(lastThrottle<(default_throttle*0.95)){
                     lastBrakeLightPulse = millis(); //reset coounter
                     for (int i = 0; i < 4; i++){
-                        //leds[frontLed[i]] = CRGB :: White;
                         leds[backLed[i]] = CHSV(255, 255, LED_BRIGHTNESS_BRAKE);
                     }
-                    /*for (int i = 0; i < 28; i++){
-                        leds[sides[i]] = CRGB :: Black;
-                        leds(18,31) = leds(14 - 1 ,0);
-                    }*/
                     FastLED.show();
 
                 }
             }
             else{ //during a brakeLightPulse emission
                 if(millisSince(lastBrakeLightPulse) >= brakeLightPulseDuration){ // check if the flash has been ON long enough
-                    //ledcWrite(pwm_channel, returnDutyCycle); // go back to previous state
                     for (int i = 0; i < 4; i++){
                         leds[backLed[i]] = CHSV(255, 255, LED_BRIGHTNESS_OFF);
                     }
@@ -1797,6 +1835,13 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
                         leds[sides[i]] = CHSV(LED_SIDE_COLOR, 255, LED_BRIGHTNESS_OFF);
                         leds(18,31) = leds(14 - 1 ,0); 
                         }
+                    }
+                    else if (myRoadLightState == SIDE_THROTTLE){
+                        SIDE_THROTTLE_COLOR = map(lastSpeedValue, -5, 30, 0, 255);
+                        for (int i = 0; i < 28; i++){
+                        leds[sides[i]] = CHSV(SIDE_THROTTLE_COLOR, 255, LED_BRIGHTNESS);
+                        leds(18,31) = leds(14 - 1 ,0); 
+                        } 
                     }
                     else{
                     for (int i = 0; i < 28; i++){

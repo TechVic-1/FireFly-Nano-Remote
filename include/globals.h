@@ -13,6 +13,7 @@
 #define ROADLIGHT_CONNECTED                 // FRONT LIGHT and BACKLIGHT option. Reconfigure 2 pins on the receiver side for FRONTLIGHT and BACKLIGHT PWM signal
 //#define OUTPUT_PPM_THROTTLE               // include receiver functions to be able to output a THROTTLE PPM/PWM signal on PIN_PPM_THROTTLE (Menu:Receiver->AppMode)
 //#define EXPERIMENTAL                      // Implements experimental functionalities that might contain some bugs
+//#define BT_ENABLED
 
 // ********** * * * * * * * * * ***********************************************
 static bool inverse_speed_direction = false;   //change if speed is negative when going forwards
@@ -97,7 +98,8 @@ static int WHEEL_DIAMETER = 100;
 static int WHEEL_PULLEY = 44;
 static int MOTOR_PULLEY = 11;
 //LED roadlights
-static int LED_SIDE_COLOR = 160; 
+static int LED_SIDE_COLOR = 160;
+static int SIDE_THROTTLE_COLOR = 0; 
 static int LED_BRIGHTNESS = 20;
 static int LED_BRIGHTNESS_BRAKE = 255;
 static int LED_BRIGHTNESS_OFF = 0;
@@ -109,6 +111,7 @@ static double LIMITED_SPEED_MAX = 20.0;   //kmh
 enum RoadLightState{
     OFF,
     ON,
+    SIDE_THROTTLE,
     BRAKES_ONLY
 };
 
@@ -263,6 +266,7 @@ enum AppState {
     STOPPED,
     PAIRING,
     UPDATE,     // update over WiFi
+    BTCOM,
     COASTING    // waiting for board to slowdown
 }; //end enum declaration
 

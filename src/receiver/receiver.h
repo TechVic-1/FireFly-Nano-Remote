@@ -101,6 +101,8 @@ uint8_t lastThrottle;
 
 String wifiStatus;
 String updateStatus;
+String BTStatus;
+String BTCOMStatus;
 
 unsigned long lastBrakeTime = 0;
 
@@ -122,6 +124,7 @@ float lowestSpeedValue = 0;
 #endif
 
 bool prepareUpdate();
+bool prepareBTCOM();
 void acquireSetting();
 void calculateRatios();
 void controlStatusLed();
@@ -229,6 +232,7 @@ int smoothValueOverTime(int valueToAdd);
 
     void switchLightOn();
     void switchLightOff();
+    void switchLightSideThrottle();
     void switchLightBrakesOnly();
     void updateBrakeLight();
     void emitBrakeLightPulse(uint_fast32_t value);

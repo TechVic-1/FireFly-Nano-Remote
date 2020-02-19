@@ -933,6 +933,14 @@ void preparePacket() {
                 break;
             }
 
+            if (requestBT) {
+                debug("reguestBT");
+                remPacket.command = SET_STATE;
+                remPacket.data = BTCOM;
+                requestBT = false;
+                break;
+            }
+
             // **************************************** LED ROADLIGHTS *****************************
             if (requestSwitchLight) {
                 //vibe(4);
@@ -1515,7 +1523,12 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                                 requestUpdate = true;
                                 backToMainMenu();
                             break;
-
+                        #ifdef BT_ENABLED
+                            case BOARD_BT:
+                                requestBT = true;
+                                backToMainMenu();
+                            break;
+                        #endif
                             case BOARD_MENU_BATTERY_CELLS:
                                 loadOptParamFromReceiver(IDX_BATTERY_CELLS);
                             break;
@@ -1546,6 +1559,12 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                                 vibe(2);
                                 requestSwitchLight = true;
                                 myRoadLightState = OFF;
+                                backToMainMenu();
+                            break;
+                            case SWITCH_LIGHT_SIDE_THROTTLE:
+                                vibe(2);
+                                requestSwitchLight = true;
+                                myRoadLightState = SIDE_THROTTLE;
                                 backToMainMenu();
                             break;
                             case SWITCH_LIGHT_BRAKES_ONLY:
@@ -1724,7 +1743,10 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                     switch (subMenuItem) {
                         case BOARD_UPDATE:
                         break;
-
+                    #ifdef BT_ENABLED
+                        case BOARD_BT:
+                        break;
+                    #endif
                         case BOARD_MENU_BATTERY_CELLS:
                             paramValueSelector(IDX_BATTERY_CELLS, "Battery\ncells", 1,16,1,0,"S");
                         break;
@@ -1749,6 +1771,9 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                             //nothing to display
                         break;
                         case SWITCH_LIGHT_OFF:
+                            //nothing to display
+                        break;
+                        case SWITCH_LIGHT_SIDE_THROTTLE:
                             //nothing to display
                         break;
                         case SWITCH_LIGHT_BRAKES_ONLY:
