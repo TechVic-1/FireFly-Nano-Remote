@@ -84,12 +84,12 @@ static int REMOTE_SLEEP_TIMEOUT = 180; // seconds to go to sleep mode
 // turn off display if battery < 15%
 static int DISPLAY_BATTERY_MIN = 15;// #### change to 0 if remote screen doesnt turn ON, then calibrate battery voltage reading ####
 // VESC current, for graphs only
-static int MOTOR_MIN = -50;
-static int MOTOR_MAX = 50;
-static int BATTERY_MIN = -10;
-static int BATTERY_MAX = 10;
+static int MOTOR_MIN = -60;
+static int MOTOR_MAX = 60;
+static int BATTERY_MIN = -40;
+static int BATTERY_MAX = 40;
 // default board configuration
-static int MAX_SPEED = 30;       // KM/H
+static int MAX_SPEED = 35;       // KM/H
 static int MAX_RANGE = 20;       // KM
 static int BATTERY_CELLS = 6;
 static int BATTERY_TYPE = 1;     // 0: LI-ION | 1: LIPO
@@ -106,7 +106,7 @@ static int LED_BRIGHTNESS_OFF = 0;
 static int LED_ROADLIGHT_MODE = 0;
 //Remote APP
 static int THROTTLE_MODE = VTM_NUNCHUCK_UART;   //Default 0=UART.Nunchuck / 1=PPM 
-static double LIMITED_SPEED_MAX = 20.0;   //kmh
+static double LIMITED_SPEED_MAX = 35.0;   //kmh
 
 enum RoadLightState{
     OFF,
