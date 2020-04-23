@@ -1012,17 +1012,17 @@ void setThrottle(uint16_t throttleValue){
         //double calculate( double setpoint, double pv );
     myPID_throttleFactor = pidThrottle->calculate(LIMITED_SPEED_MAX, mySpeed);
     
-    int deadBand = 5;
+    int deadBand = 2;
     float myCurrent;
     float myRpm;
     float myDuty;
-    float myHandbrakeCurrent = 10;
+    float myHandbrakeCurrent = 60;
     float motor_max_current = MOTOR_MAX;    //max current
     float motor_min_current = MOTOR_MIN;    //max negative current for active braking or cruising backwards
-    float motor_max_brake_current = 20;  //max absolute current for regenerative braking
-    float regen_brake_min_speed = 10;    // switch to active braking under this speed. Default 2
+    float motor_max_brake_current = 35;  //max absolute current for regenerative braking
+    float regen_brake_min_speed = 15;    // switch to active braking under this speed. Default 2
     float handbrakeMaxSpeed = 5;      // use handbrake under this speed when braking. Default 0.2
-    float stoppedStateMaxSpeed = 4;     // consider the board stopped up to this speed
+    float stoppedStateMaxSpeed = 2;     // consider the board stopped up to this speed
 
     //TODO: test if regen braking value has to be signed and opposite to current direction - UART.setBrakeCurrent()
 
