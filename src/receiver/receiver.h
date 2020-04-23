@@ -37,7 +37,7 @@ PID* pidThrottle;
     double PID_Ki = 0.0000001;      //0 is fine, otherwise order of scale is 5E-7;
     double PID_Kd = 0.4;    //0.4;
     double PID_dt = 25;     //25ms
-    double PID_max = 1;
+    double PID_max = 1.0;
     double PID_min = 0;
 
     double myPID_throttleFactor; //output
