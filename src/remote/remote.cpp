@@ -1398,6 +1398,9 @@ void backToMainMenu() {
     initFlag_PSL = 1;
     initFlag_PVS = 1;
 }
+void backToMenuLight() {
+
+   }
 
 void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuously via updateMainDisplay() when PAGE state == PAGE_MENU
     //  display.drawFrame(0,0,64,128);
@@ -1521,7 +1524,6 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                         switch (subMenuItem) {
                             case BOARD_UPDATE:
                                 requestUpdate = true;
-                                backToMainMenu();
                             break;
                         #ifdef BT_ENABLED
                             case BOARD_BT:
@@ -1553,7 +1555,7 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                                 vibe(2);
                                 requestSwitchLight = true;
                                 myRoadLightState = ON;
-                                backToMainMenu();
+                                backToMainMenu();                                
                             break;
                             case SWITCH_LIGHT_OFF:
                                 vibe(2);
@@ -1561,6 +1563,13 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                                 myRoadLightState = OFF;
                                 backToMainMenu();
                             break;
+                            case SWITCH_LIGHT_SIDE:
+                                vibe(2);
+                                requestSwitchLight = true;
+                                myRoadLightState = SIDE;
+                                backToMainMenu();
+                            break;
+
                             case SWITCH_LIGHT_SIDE_THROTTLE:
                                 vibe(2);
                                 requestSwitchLight = true;
@@ -1572,6 +1581,7 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                                 requestSwitchLight = true;
                                 myRoadLightState = BRAKES_ONLY;
                                 backToMainMenu();
+                            break;
                             case ROADLIGHT_SETTINGS:
                                 //download 3 current values from receiver:
                                loadOptParamFromReceiver(IDX_LED_SIDE_COLOR);
@@ -1742,6 +1752,7 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                 case MENU_BOARD:
                     switch (subMenuItem) {
                         case BOARD_UPDATE:
+                            backToMainMenu();
                         break;
                     #ifdef BT_ENABLED
                         case BOARD_BT:
@@ -1772,6 +1783,9 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                         break;
                         case SWITCH_LIGHT_OFF:
                             //nothing to display
+                        break;
+                        case SWITCH_LIGHT_SIDE:
+
                         break;
                         case SWITCH_LIGHT_SIDE_THROTTLE:
                             //nothing to display
