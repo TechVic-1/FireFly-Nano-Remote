@@ -232,6 +232,7 @@ int smoothValueOverTime(int valueToAdd);
 
     void switchLightOn();
     void switchLightOff();
+    void switchLightSide();
     void switchLightSideThrottle();
     void switchLightBrakesOnly();
     void updateBrakeLight();
