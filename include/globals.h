@@ -111,6 +111,7 @@ static double LIMITED_SPEED_MAX = 35.0;   //kmh
 enum RoadLightState{
     OFF,
     ON,
+    SIDE,
     SIDE_THROTTLE,
     BRAKES_ONLY
 };
