@@ -79,7 +79,7 @@ void setup(){ //runs once after powerOn
 
         set_max_power_in_volts_and_milliamps(5, 500);
         for (int i = 0; i < 4; i++){
-            leds[backLed[i]] = CHSV(255, 0, LED_BRIGHTNESS_OFF);
+            leds[frontLed[i]] = CHSV(255, 0, LED_BRIGHTNESS_OFF);
             leds[backLed[i]] = CHSV(255, 255, LED_BRIGHTNESS_OFF);
             }
         FastLED.show();  
@@ -751,6 +751,9 @@ void radioExchange() {   //receive packet, execute SET_ or GET_ request, send an
                         break;
                         case RoadLightState::BRAKES_ONLY: //2:  //brake only mode
                             switchLightBrakesOnly();
+                        break;
+                        case RoadLightState::SIDE:
+                            switchLightSide();
                         break;
                     }
                 break;
@@ -1731,17 +1734,6 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
 #ifdef ROADLIGHT_CONNECTED
     void switchLightOn(){
 
-        /*for (int i = 0; i < 4; i++){
-            leds[frontLed[i]] = CHSV( 255, 0, LED_BRIGHTNESS); //White
-            leds[backLed[i]] = CHSV( 255, 255, LED_BRIGHTNESS); //Red
-        }
-        
-        for (int i = 0; i < 28; i++){
-            leds[sides[i]] = CHSV(LED_SIDE_COLOR, 255, LED_BRIGHTNESS);
-            leds(18,31) = leds(14 - 1 ,0);
-        }
-        
-        FastLED.show();*/
         myRoadLightState = ON;
     }
 
@@ -1762,28 +1754,24 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
 
     void switchLightBrakesOnly(){
 
-        /*for (int i = 0; i < 4; i++){
-            leds[frontLed[i]] = CHSV( 255, 0, LED_BRIGHTNESS);
-            leds[backLed[i]] = CHSV( 255, 255, LED_BRIGHTNESS);
-        }
-        for (int i = 0; i < 28; i++){
-            leds[sides[i]] = CHSV(LED_SIDE_COLOR, 255, LED_BRIGHTNESS_OFF);
-            leds(18,31) = leds(14 - 1 ,0);
-        }
-        
-        FastLED.show();*/
         myRoadLightState = BRAKES_ONLY;
     }
 
     void switchLightSideThrottle(){
+
         myRoadLightState = SIDE_THROTTLE;
+    }
+
+    void switchLightSide(){
+
+        myRoadLightState = SIDE;
     }
 
 
     void updateBrakeLight(){   // activate BACKLIGHT flashing sequence from setThrottle() function
         switch(myRoadLightState){
             case OFF:
-                // do nothing
+               //do nothing
             break;
 
             case ON:
@@ -1795,7 +1783,11 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
             break;
 
             case BRAKES_ONLY:
-               emitBrakeLightPulse(LED_BRIGHTNESS); //activate brakeLight flashes while OFF in between
+                emitBrakeLightPulse(LED_BRIGHTNESS); //activate brakeLight flashes while OFF in between
+            break;
+
+            case SIDE:
+                emitBrakeLightPulse(LED_BRIGHTNESS); //activate brakeLight flashes while OFF in between
             break;
         }
     }
@@ -1826,28 +1818,41 @@ bool inRange(int val, int minimum, int maximum){ //checks if value is within MIN
              //debug unexpected state
             if(lastThrottle >= (default_throttle*0.98)){ //debug unexpected state
                 lastBrakeLightPulse = millis(); //reset coounter
+                    
                     for (int i = 0; i < 4; i++){
-                        leds[backLed[i]] = CHSV(255, 0, LED_BRIGHTNESS);
+                        leds[frontLed[i]] = CHSV(255, 0, LED_BRIGHTNESS);
                         leds[backLed[i]] = CHSV(255, 255, LED_BRIGHTNESS);
                     }
-                    if (myRoadLightState == BRAKES_ONLY){
+
+                    if (myRoadLightState == SIDE){
                         for (int i = 0; i < 28; i++){
-                        leds[sides[i]] = CHSV(LED_SIDE_COLOR, 255, LED_BRIGHTNESS_OFF);
-                        leds(18,31) = leds(14 - 1 ,0); 
+                            leds[sides[i]] = CHSV(LED_SIDE_COLOR, 255, LED_BRIGHTNESS);
+                            leds(18,31) = leds(14 - 1 ,0);
+                        }
+                    }
+
+                    else if (myRoadLightState == BRAKES_ONLY){
+                        for (int i = 0; i < 4; i++){
+                            leds[frontLed[i]] = CHSV(255, 0, LED_BRIGHTNESS_OFF);
+                            leds[backLed[i]] = CHSV(255, 255, LED_BRIGHTNESS_OFF);
+                        }
+                        for (int i = 0; i < 28; i++){
+                            leds[sides[i]] = CHSV(LED_SIDE_COLOR, 255, LED_BRIGHTNESS_OFF);
+                            leds(18,31) = leds(14 - 1 ,0); 
                         }
                     }
                     else if (myRoadLightState == SIDE_THROTTLE){
-                        SIDE_THROTTLE_COLOR = map(lastSpeedValue, -5, 30, 0, 255);
+                        SIDE_THROTTLE_COLOR = map(lastSpeedValue, -10, 30, 0, 255);
                         for (int i = 0; i < 28; i++){
-                        leds[sides[i]] = CHSV(SIDE_THROTTLE_COLOR, 255, LED_BRIGHTNESS);
-                        leds(18,31) = leds(14 - 1 ,0); 
+                            leds[sides[i]] = CHSV(SIDE_THROTTLE_COLOR, 255, LED_BRIGHTNESS);
+                            leds(18,31) = leds(14 - 1 ,0); 
                         } 
                     }
                     else{
                     for (int i = 0; i < 28; i++){
-                        leds[sides[i]] = CHSV(LED_SIDE_COLOR, 255, LED_BRIGHTNESS);
+                        leds[sides[i]] = CHSV(LED_SIDE_COLOR, 255, LED_BRIGHTNESS_OFF);
                         leds(18,31) = leds(14 - 1 ,0);
-                    }
+                        }
                     }
                     FastLED.show();
             }
