@@ -1146,7 +1146,7 @@ float batteryPackPercentage( float voltage ) {
     float minCellVoltage;
 
     if (boardConfig.batteryType == 0) { // Li-ion
-        minCellVoltage = 3.1;
+        minCellVoltage = 2.8;
     }
     else { // Li-po
         minCellVoltage = 3.4;
