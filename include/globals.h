@@ -89,7 +89,7 @@ static int MOTOR_MAX = 60;
 static int BATTERY_MIN = -40;
 static int BATTERY_MAX = 40;
 // default board configuration
-static int MAX_SPEED = 35;       // KM/H
+static int MAX_SPEED = 40;       // KM/H
 static int MAX_RANGE = 20;       // KM
 static int BATTERY_CELLS = 6;
 static int BATTERY_TYPE = 0;     // 0: LI-ION | 1: LIPO
@@ -106,7 +106,7 @@ static int LED_BRIGHTNESS_OFF = 0;
 static int LED_ROADLIGHT_MODE = 0;
 //Remote APP
 static int THROTTLE_MODE = VTM_NUNCHUCK_UART;   //Default 0=UART.Nunchuck / 1=PPM 
-static double LIMITED_SPEED_MAX = 35.0;   //kmh
+static double LIMITED_SPEED_MAX = 40.0;   //kmh
 
 enum RoadLightState{
     OFF,
