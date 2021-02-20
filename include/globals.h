@@ -65,7 +65,7 @@ static float AUTO_CRUISE_TIME = 30.0;    // seconds
 static float CRUISE_CURRENT_LOW = 5.0;   // Amps
 
 // auto stop if remote is off and speed is over 20 km/h
-static float MAX_PUSHING_SPEED = 10.0;   // km/h
+static float MAX_PUSHING_SPEED = 15.0;   // km/h
 
 // Auto stop (in seconds)
 static float AUTO_BRAKE_TIME = 10;    // time to apply the full brakes
@@ -92,14 +92,15 @@ static int BATTERY_MAX = 40;
 static int MAX_SPEED = 40;       // KM/H
 static int MAX_RANGE = 20;       // KM
 static int BATTERY_CELLS = 6;
-static int BATTERY_TYPE = 0;     // 0: LI-ION | 1: LIPO
+static int BATTERY_TYPE = 1;     // 0: LI-ION | 1: LIPO
 static int MOTOR_POLES = 14;
 static int WHEEL_DIAMETER = 100;
 static int WHEEL_PULLEY = 44;
 static int MOTOR_PULLEY = 11;
 //LED roadlights
 static int LED_SIDE_COLOR = 160;
-static int SIDE_THROTTLE_COLOR = 0; 
+static int SIDE_THROTTLE_COLOR = 0;
+static int Rainbow_speed = 0; 
 static int LED_BRIGHTNESS = 20;
 static int LED_BRIGHTNESS_BRAKE = 255;
 static int LED_BRIGHTNESS_OFF = 0;
@@ -113,6 +114,7 @@ enum RoadLightState{
     ON,
     SIDE,
     SIDE_THROTTLE,
+    SIDE_RAINBOW,
     BRAKES_ONLY
 };
 

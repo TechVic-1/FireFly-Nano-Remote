@@ -1576,6 +1576,14 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
                                 myRoadLightState = SIDE_THROTTLE;
                                 backToMainMenu();
                             break;
+
+                            case SWITCH_LIGHT_SIDE_RAINBOW:
+                                vibe(2);
+                                requestSwitchLight = true;
+                                myRoadLightState = SIDE_RAINBOW;
+                                backToMainMenu();
+                            break;
+
                             case SWITCH_LIGHT_BRAKES_ONLY:
                                 vibe(2);
                                 requestSwitchLight = true;
@@ -1788,6 +1796,9 @@ void drawSettingsMenu() {   //LOOP() task on core 1 runs this function continuou
 
                         break;
                         case SWITCH_LIGHT_SIDE_THROTTLE:
+                            //nothing to display
+                        break;
+                        case SWITCH_LIGHT_SIDE_RAINBOW:
                             //nothing to display
                         break;
                         case SWITCH_LIGHT_BRAKES_ONLY:

@@ -222,8 +222,8 @@ int smoothValueOverTime(int valueToAdd);
     RoadLightState myRoadLightState = OFF; //default value on startupTime
 
     const double led_pwm_frequency = 5;
-    const uint8_t led_pwm_channel_frontLight = 0; //GPIO channel to use
-    const uint8_t led_pwm_channel_backLight = 1; //GPIO channel to use
+    //const uint8_t led_pwm_channel_frontLight = 0; //GPIO channel to use
+    //const uint8_t led_pwm_channel_backLight = 1; //GPIO channel to use
     const uint8_t led_pwm_resolution = 8;
 
     unsigned long lastBrakeLightPulse = 0;
@@ -234,6 +234,7 @@ int smoothValueOverTime(int valueToAdd);
     void switchLightOff();
     void switchLightSide();
     void switchLightSideThrottle();
+    void switchLightSideRainbow();
     void switchLightBrakesOnly();
     void updateBrakeLight();
     void emitBrakeLightPulse(uint_fast32_t value);
