@@ -95,7 +95,7 @@ static int BATTERY_CELLS = 6;
 static int BATTERY_TYPE = 1;     // 0: LI-ION | 1: LIPO
 static int MOTOR_POLES = 14;
 static int WHEEL_DIAMETER = 100;
-static int WHEEL_PULLEY = 44;
+static int WHEEL_PULLEY = 50;
 static int MOTOR_PULLEY = 11;
 //LED roadlights
 static int LED_SIDE_COLOR = 160;
