@@ -174,7 +174,7 @@ float batteryPackPercentage( float voltage ) { // Calculate the battery level of
   if (boardConfig.batteryType == 0) { // Li-ion
     minCellVoltage = 2.8;
   } else { // Li-po
-    minCellVoltage = 3.2;
+    minCellVoltage = 3.0;
   }
 
   float percentage = (100 - ( (maxCellVoltage - voltage / boardConfig.batteryCells) / ((maxCellVoltage - minCellVoltage)) ) * 100);
