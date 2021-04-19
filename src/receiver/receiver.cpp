@@ -1649,7 +1649,7 @@ void updateOptParamVariables(){
 
 #include <sstream>
 #include <string.h>
-//using namespace std;
+using namespace std;
 
 // Load a setting (index & value)pair from flash memory and update the localOptParamValueArray[] value. Returns the setting (float) value. 
 float loadFlashSetting(uint8_t myGlobalSettingIndex, float defaultValue){
