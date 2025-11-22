@@ -84,19 +84,19 @@ static int REMOTE_SLEEP_TIMEOUT = 180; // seconds to go to sleep mode
 // turn off display if battery < 15%
 static int DISPLAY_BATTERY_MIN = 15;// #### change to 0 if remote screen doesnt turn ON, then calibrate battery voltage reading ####
 // VESC current, for graphs only
-static int MOTOR_MIN = -60;
-static int MOTOR_MAX = 60;
-static int BATTERY_MIN = -40;
-static int BATTERY_MAX = 40;
+static int MOTOR_MIN = -80;
+static int MOTOR_MAX = 80;
+static int BATTERY_MIN = -60;
+static int BATTERY_MAX = 60;
 // default board configuration
 static int MAX_SPEED = 40;       // KM/H
-static int MAX_RANGE = 25;       // KM
+static int MAX_RANGE = 30;       // KM
 static int BATTERY_CELLS = 6;
 static int BATTERY_TYPE = 1;     // 0: LI-ION | 1: LIPO
 static int MOTOR_POLES = 14;
 static int WHEEL_DIAMETER = 100;
 static int WHEEL_PULLEY = 50;
-static int MOTOR_PULLEY = 11;
+static int MOTOR_PULLEY = 16;
 //LED roadlights
 static int LED_SIDE_COLOR = 160;
 static int SIDE_THROTTLE_COLOR = 0;
