@@ -1025,8 +1025,8 @@ void setThrottle(uint16_t throttleValue){
     float myHandbrakeCurrent = 60;
     float motor_max_current = MOTOR_MAX;    //max current
     float motor_min_current = MOTOR_MIN;    //max negative current for active braking or cruising backwards
-    float motor_max_brake_current = 35;  //max absolute current for regenerative braking
-    float regen_brake_min_speed = 15;    // switch to active braking under this speed. Default 2
+    float motor_max_brake_current = 80;  //max absolute current for regenerative braking
+    float regen_brake_min_speed = 5;    // switch to active braking under this speed. Default 2
     float handbrakeMaxSpeed = 5;      // use handbrake under this speed when braking. Default 0.2
     float stoppedStateMaxSpeed = 2;     // consider the board stopped up to this speed
 
