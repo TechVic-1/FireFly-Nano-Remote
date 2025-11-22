@@ -1,5 +1,4 @@
 #include <stdint.h>
-
 /*  Hardware related definitions for Heltec V2 Board
 // ATTENTION: check your board version!
 // This settings are for boards labeled v2 on pcb
@@ -22,7 +21,7 @@
 
 
 #define PIN_TRIGGER   32
-#define ADC_THROTTLE  ADC1_GPIO38_CHANNEL // ADC1_CHANNEL_2
+#define ADC_THROTTLE  ADC1_CHANNEL_2 // ADC1_GPIO38_CHANNEL // ADC1_CHANNEL_2
 
 #define PIN_BATTERY   13
 
