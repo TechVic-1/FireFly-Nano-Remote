@@ -21,7 +21,7 @@
     #include <soc/rtc_cntl_reg.h>
 
     #include <esp_sleep.h>
-    #include <esp_deep_sleep.h>
+    //#include <esp_deep_sleep.h>
 
     // flash
     #include <nvs.h>
