@@ -1049,8 +1049,9 @@ int readThrottlePosition() {
         // printf("%d mV\n",voltage);
 
         for ( uint8_t i = 0; i < samples; i++ ){
-            //        total += adc1_get_raw(ADC_THROTTLE);
-            total += adc1_get_voltage(ADC_THROTTLE); //seems to give better results
+                    //total += adc1_get_raw(ADC_THROTTLE);
+            //total += adc1_get_voltage(ADC_THROTTLE); //seems to give better results
+            total += analogRead(ADC_THROTTLE); // Modern Arduino API
         }
     #elif ARDUINO_SAMD_ZERO
         for ( uint8_t i = 0; i < samples; i++ ){
